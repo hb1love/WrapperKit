@@ -20,18 +20,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import WrapperKit
 
-@propertyWrapper
-public struct Localizable {
-  private var key: String
+class EmailTests: XCTestCase {
+  @Email var email: String?
 
-  public var wrappedValue: String {
-    get { NSLocalizedString(key, comment: "") }
-    set { key = newValue }
+  func testValidEmail() {
+    // Given
+    let myEmail = "esther@gmail.com"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertEqual(email, myEmail)
   }
 
-  public init(wrappedValue: String) {
-    self.key = wrappedValue
+  func testInvalidEmail() {
+    // Given
+    let myEmail = "esther@gmail"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertNil(email)
   }
 }

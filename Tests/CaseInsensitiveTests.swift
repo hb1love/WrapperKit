@@ -20,7 +20,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import WrapperKit
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+class CaseInsensitiveTests: XCTestCase {
+  @CaseInsensitive("default") var lowerName: String
+  @CaseInsensitive("default") var upperName: String
+  @CaseInsensitive("default") var lastName: String
+
+  func testCaseInsensitive() {
+    // Given
+    let newLowerName = "esther"
+    let newUpperName = "ESTHER"
+
+    // When
+    lowerName = newLowerName
+    upperName = newUpperName
+    let result = lowerName == upperName
+
+    // Then
+    XCTAssertEqual(result, true)
+  }
+
+  func testCompareCaseInsensitive() {
+    // Given
+    lastName = "Kim"
+
+    // Then
+    XCTAssertEqual(lastName > lowerName, true)
+    XCTAssertLessThan(lowerName, lastName)
+  }
+}

@@ -20,7 +20,21 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import WrapperKit
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+class TrimmedTests: XCTestCase {
+  @Trimmed var content: String
+
+  func testTrimmed() {
+    // Given
+    let newContent = " awesome "
+    let expected = "awesome"
+
+    // When
+    content = newContent
+
+    // Then
+    XCTAssertEqual(content, expected)
+  }
+}

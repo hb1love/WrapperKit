@@ -20,7 +20,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import WrapperKit
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+class UserDefaultTests: XCTestCase {
+  @UserDefault("com.esther.test", defaultValue: "E29jw102") var session: String
+
+  func testUserDefault() throws {
+    // Given
+    let newSession = "D920J14"
+
+    // When
+    session = newSession
+
+    // Then
+    XCTAssertEqual(session, newSession)
+  }
+}

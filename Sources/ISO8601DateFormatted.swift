@@ -22,8 +22,8 @@
 
 import Foundation
 
-@available(OSX 10.12, *)
 @available(iOS 10.0, *)
+@available(OSX 10.12, *)
 @propertyWrapper
 public struct ISO8601DateFormatted {
   static private let formatter = ISO8601DateFormatter()
@@ -31,7 +31,7 @@ public struct ISO8601DateFormatted {
   public var projectedValue: String { ISO8601DateFormatted.formatter.string(from: wrappedValue) }
   public var wrappedValue: Date
 
-  public init(wrappedValue: Date) {
+  public init(_ wrappedValue: Date = Date(timeIntervalSince1970: 0)) {
     self.wrappedValue = wrappedValue
   }
 }

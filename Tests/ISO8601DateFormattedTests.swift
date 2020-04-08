@@ -20,7 +20,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import WrapperKit
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+@available(iOS 10.0, *)
+@available(OSX 10.12, *)
+class ISO8601DateFormattedTests: XCTestCase {
+  @ISO8601DateFormatted(Date()) var date: Date
+
+  func testISO8601DateFormatted() {
+    // Given
+    let newDate = Date(timeIntervalSince1970: 3630)
+
+    // When
+    date = newDate
+
+    // Then
+    XCTAssertEqual(_date.projectedValue, "1970-01-01T01:00:30Z")
+  }
+}

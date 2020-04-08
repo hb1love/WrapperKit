@@ -27,7 +27,7 @@ public struct Constrained<Value: Comparable> {
   var range: ClosedRange<Value>
   var value: Value
 
-  public init(wrappedValue value: Value, _ range: ClosedRange<Value>) {
+  public init(_ value: Value, range: ClosedRange<Value>) {
     precondition(range.contains(value))
     self.value = value
     self.range = range
