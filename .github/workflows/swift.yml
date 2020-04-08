@@ -1,19 +1,39 @@
-name: Swift
+name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - '*'
 
 jobs:
-  build:
-
-    runs-on: macos-latest
-
+  iOS:
+    name: Test iOS
+    runs-on: macOS-latest
+    strategy:
+      matrix:
+        destination: ["OS=13.3,name=iPhone 11 Pro"]
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - uses: actions/checkout@v2
+
+      - name: Generate Xcode Project
+        run: swift package generate-xcodeproj --enable-code-coverage
+
+      - name: iOS - ${{ matrix.destination }}
+        run: set -o pipefail && xcodebuild clean build test -project. "WrapperKit.xcodeproj" -scheme "WrapperKit" -destination "${destination }" | xcpretty
+        env:
+          destination: ${{ matrix.destination }}
+
+      - name: Upload Code Coverage
+        run: bash <(curl -s https://codecov.io/bash) -t "${CODECOV_TOKEN}"
+        env:
+          CODECOV_TOKEN: ${{ secrets.codecov_token }}
+  spm:
+    name: Test with SPM
+    runs-on: macOS-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: SPM Test
+        run: swift test -c debug
