@@ -20,7 +20,44 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import WrapperKit
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+class ConstrainedTests: XCTestCase {
+  private let lowerbound = 1
+  private let upperbound = 12
+  @Constrained(1, range: 1...12) var month: Int
+
+  func testConstrained() {
+    // Given
+    let newMonth = 12
+
+    // When
+    month = newMonth
+
+    // Then
+    XCTAssertEqual(month, newMonth)
+  }
+
+  func testLowerboundConstrained() {
+    // Given
+    let newMonth = 0
+
+    // When
+    month = newMonth
+
+    // Then
+    XCTAssertEqual(month, lowerbound)
+  }
+
+  func testUpperboundConstrained() {
+    // Given
+    let newMonth = 13
+
+    // When
+    month = newMonth
+
+    // Then
+    XCTAssertEqual(month, upperbound)
+  }
+}

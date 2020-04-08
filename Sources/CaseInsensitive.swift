@@ -23,33 +23,11 @@
 import Foundation
 
 @propertyWrapper
-public struct CaseInsensitive {
-  var value: String = ""
+public struct CaseInsensitive<Value: StringProtocol> {
+  public var projectedValue: String { wrappedValue.lowercased() }
+  public var wrappedValue: Value
 
-  public init(_ wrappedValue: String) {
+  public init(_ wrappedValue: Value) {
     self.wrappedValue = wrappedValue
-  }
-
-  public var wrappedValue: String {
-    get { value.lowercased() }
-    set { value = newValue.lowercased() }
-  }
-}
-
-extension CaseInsensitive: Comparable {
-  private func compare(_ other: CaseInsensitive) -> ComparisonResult {
-    return wrappedValue.caseInsensitiveCompare(other.wrappedValue)
-  }
-
-  public static func == (lhs: CaseInsensitive, rhs: CaseInsensitive) -> Bool {
-    return lhs.compare(rhs) == .orderedSame
-  }
-  
-  public static func < (lhs: CaseInsensitive, rhs: CaseInsensitive) -> Bool {
-    return lhs.compare(rhs) == .orderedAscending
-  }
-
-  public static func > (lhs: CaseInsensitive, rhs: CaseInsensitive) -> Bool {
-    return lhs.compare(rhs) == .orderedDescending
   }
 }

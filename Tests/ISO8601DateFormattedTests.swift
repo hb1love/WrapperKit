@@ -20,18 +20,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import WrapperKit
 
-@propertyWrapper
-public struct Localizable {
-  private var key: String
+@available(iOS 10.0, *)
+@available(OSX 10.12, *)
+class ISO8601DateFormattedTests: XCTestCase {
+  @ISO8601DateFormatted(Date()) var date: Date
 
-  public var wrappedValue: String {
-    get { NSLocalizedString(key, comment: "") }
-    set { key = newValue }
-  }
+  func testISO8601DateFormatted() {
+    // Given
+    let newDate = Date(timeIntervalSince1970: 3630)
 
-  public init(wrappedValue: String) {
-    self.key = wrappedValue
+    // When
+    date = newDate
+
+    // Then
+    XCTAssertEqual($date, "1970-01-01T01:00:30Z")
   }
 }

@@ -20,7 +20,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import XCTest
+@testable import WrapperKit
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+class EmailTests: XCTestCase {
+  @Email("esther") var email: String?
+
+  func testValidEmail() {
+    // Given
+    let myEmail = "esther@gmail.com"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertEqual(email, myEmail)
+  }
+
+  func testInvalidEmail() {
+    // Given
+    let myEmail = "esther@gmail"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertNil(email)
+  }
+}

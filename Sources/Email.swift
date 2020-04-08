@@ -26,7 +26,7 @@ import Foundation
 public struct Email<Value: StringProtocol> {
   var value: Value?
 
-  public init(wrappedValue: Value?) {
+  public init(_ wrappedValue: Value? = nil) {
     self.wrappedValue = wrappedValue
   }
   
