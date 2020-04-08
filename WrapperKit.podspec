@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "WrapperKit"
-  s.version          = "1.0.0"
+  s.version          = "1.0.1"
   s.summary          = "🌷 Swift Property Wrappers Kit"
   s.homepage         = "https://github.com/hb1love/WrapperKit"
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

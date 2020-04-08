@@ -12,13 +12,12 @@ Swift Property Wrappers Kit
 
 ## 🌷 Usage
 
-- @UserDefault
-- @CaseInsensitive
-- @Email
-- @Constrained
-- @Localizable
-- @Trimmed
-- @ISO8601DateFormatted
+### `@UserDefault`
+### `@CaseInsensitive`
+### `@Email`
+### `@Constrained`
+### `@Trimmed`
+### `@ISO8601DateFormatted`
 
 ## ⚙️ Installation
 
