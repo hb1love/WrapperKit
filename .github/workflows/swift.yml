@@ -22,7 +22,7 @@ jobs:
         run: swift package generate-xcodeproj --enable-code-coverage
 
       - name: iOS - ${{ matrix.destination }}
-        run: set -o pipefail && xcodebuild clean build test -project. "WrapperKit.xcodeproj" -scheme "WrapperKit" -destination "${destination }" | xcpretty
+        run: set -o pipefail && xcodebuild clean build test -project. "WrapperKit.xcodeproj" -scheme "WrapperKit" -destination "${destination}" | xcpretty
         env:
           destination: ${{ matrix.destination }}
 
