@@ -36,6 +36,6 @@ class ISO8601DateFormattedTests: XCTestCase {
     date = newDate
 
     // Then
-    XCTAssertEqual(_date.projectedValue, "1970-01-01T01:00:30Z")
+    XCTAssertEqual($date, "1970-01-01T01:00:30Z")
   }
 }

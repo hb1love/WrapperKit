@@ -24,7 +24,7 @@ import XCTest
 @testable import WrapperKit
 
 class EmailTests: XCTestCase {
-  @Email var email: String?
+  @Email("esther") var email: String?
 
   func testValidEmail() {
     // Given

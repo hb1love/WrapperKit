@@ -24,7 +24,7 @@ import XCTest
 @testable import WrapperKit
 
 class TrimmedTests: XCTestCase {
-  @Trimmed var content: String
+  @Trimmed("") var content: String
 
   func testTrimmed() {
     // Given

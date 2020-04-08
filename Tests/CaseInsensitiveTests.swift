@@ -36,18 +36,20 @@ class CaseInsensitiveTests: XCTestCase {
     // When
     lowerName = newLowerName
     upperName = newUpperName
-    let result = lowerName == upperName
 
     // Then
-    XCTAssertEqual(result, true)
+    XCTAssertEqual($lowerName, $upperName)
+    XCTAssertEqual(lowerName, newLowerName)
+    XCTAssertEqual(upperName, newUpperName)
   }
 
   func testCompareCaseInsensitive() {
-    // Given
+    // When
+    lowerName = "default"
     lastName = "Kim"
 
     // Then
-    XCTAssertEqual(lastName > lowerName, true)
-    XCTAssertLessThan(lowerName, lastName)
+    XCTAssertGreaterThan($lastName, $lowerName)
+    XCTAssertLessThan($lowerName, $lastName)
   }
 }
