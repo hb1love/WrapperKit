@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import XCTest
-@testable import WrapperKit
+import Foundation
 
-class TrimmedTests: XCTestCase {
-  @Trimmed("") var content: String
+@propertyWrapper
+public struct Trimmed {
+  var value: String = ""
 
-  func testTrimmed() {
-    // Given
-    let newContent = " awesome "
-    let expected = "awesome"
+  public init(_ wrappedValue: String = "") {
+    self.wrappedValue = wrappedValue
+  }
 
-    // When
-    content = newContent
-
-    // Then
-    XCTAssertEqual(content, expected)
+  public var wrappedValue: String {
+    get { value }
+    set { value = newValue.trimmingCharacters(in: .whitespacesAndNewlines) }
   }
 }

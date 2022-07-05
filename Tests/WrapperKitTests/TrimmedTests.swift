@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,18 @@
 import XCTest
 @testable import WrapperKit
 
-class EmailTests: XCTestCase {
-  @Email("esther") var email: String?
+class TrimmedTests: XCTestCase {
+  @Trimmed("") var content: String
 
-  func testValidEmail() {
+  func testTrimmed() {
     // Given
-    let myEmail = "esther@gmail.com"
+    let newContent = " awesome "
+    let expected = "awesome"
 
     // When
-    email = myEmail
+    content = newContent
 
     // Then
-    XCTAssertEqual(email, myEmail)
-  }
-
-  func testInvalidEmail() {
-    // Given
-    let myEmail = "esther@gmail"
-
-    // When
-    email = myEmail
-
-    // Then
-    XCTAssertNil(email)
+    XCTAssertEqual(content, expected)
   }
 }

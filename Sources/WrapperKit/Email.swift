@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,22 +20,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import XCTest
-@testable import WrapperKit
+import Foundation
 
-@available(iOS 10.0, *)
-@available(OSX 10.12, *)
-class ISO8601DateFormattedTests: XCTestCase {
-  @ISO8601DateFormatted(Date()) var date: Date
+@propertyWrapper
+public struct Email<Value: StringProtocol> {
+  var value: Value?
 
-  func testISO8601DateFormatted() {
-    // Given
-    let newDate = Date(timeIntervalSince1970: 3630)
+  public init(_ wrappedValue: Value? = nil) {
+    self.wrappedValue = wrappedValue
+  }
+  
+  public var wrappedValue: Value? {
+    get {
+      return validate(email: value) ? value : nil
+    }
+    set {
+      value = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) as? Value
+    }
+  }
 
-    // When
-    date = newDate
-
-    // Then
-    XCTAssertEqual($date, "1970-01-01T01:00:30Z")
+  private func validate(email: Value?) -> Bool {
+    guard let email = email else { return false }
+    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+    return emailPred.evaluate(with: email)
   }
 }

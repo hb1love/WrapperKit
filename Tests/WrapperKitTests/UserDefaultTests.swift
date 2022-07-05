@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import WrapperKit
 
-@propertyWrapper
-public struct Constrained<Value: Comparable> {
-  var range: ClosedRange<Value>
-  var value: Value
+class UserDefaultTests: XCTestCase {
+  @UserDefault("com.esther.test", defaultValue: "E29jw102") var session: String
 
-  public init(_ value: Value, range: ClosedRange<Value>) {
-    precondition(range.contains(value))
-    self.value = value
-    self.range = range
-  }
+  func testUserDefault() throws {
+    // Given
+    let newSession = "D920J14"
 
-  public var wrappedValue: Value {
-    get { value }
-    set { value = min(max(range.lowerBound, newValue), range.upperBound) }
+    // When
+    session = newSession
+
+    // Then
+    XCTAssertEqual(session, newSession)
   }
 }

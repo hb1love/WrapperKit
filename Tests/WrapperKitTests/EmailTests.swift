@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,14 +20,31 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import WrapperKit
 
-@propertyWrapper
-public struct CaseInsensitive<Value: StringProtocol> {
-  public var projectedValue: String { wrappedValue.lowercased() }
-  public var wrappedValue: Value
+class EmailTests: XCTestCase {
+  @Email("esther") var email: String?
 
-  public init(_ wrappedValue: Value) {
-    self.wrappedValue = wrappedValue
+  func testValidEmail() {
+    // Given
+    let myEmail = "esther@gmail.com"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertEqual(email, myEmail)
+  }
+
+  func testInvalidEmail() {
+    // Given
+    let myEmail = "esther@gmail"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertNil(email)
   }
 }

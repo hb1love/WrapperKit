@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,41 +23,33 @@
 import XCTest
 @testable import WrapperKit
 
-class ConstrainedTests: XCTestCase {
-  private let lowerbound = 1
-  private let upperbound = 12
-  @Constrained(1, range: 1...12) var month: Int
+class CaseInsensitiveTests: XCTestCase {
+  @CaseInsensitive("default") var lowerName: String
+  @CaseInsensitive("default") var upperName: String
+  @CaseInsensitive("default") var lastName: String
 
-  func testConstrained() {
+  func testCaseInsensitive() {
     // Given
-    let newMonth = 12
+    let newLowerName = "esther"
+    let newUpperName = "ESTHER"
 
     // When
-    month = newMonth
+    lowerName = newLowerName
+    upperName = newUpperName
 
     // Then
-    XCTAssertEqual(month, newMonth)
+    XCTAssertEqual($lowerName, $upperName)
+    XCTAssertEqual(lowerName, newLowerName)
+    XCTAssertEqual(upperName, newUpperName)
   }
 
-  func testLowerboundConstrained() {
-    // Given
-    let newMonth = 0
-
+  func testCompareCaseInsensitive() {
     // When
-    month = newMonth
+    lowerName = "default"
+    lastName = "Kim"
 
     // Then
-    XCTAssertEqual(month, lowerbound)
-  }
-
-  func testUpperboundConstrained() {
-    // Given
-    let newMonth = 13
-
-    // When
-    month = newMonth
-
-    // Then
-    XCTAssertEqual(month, upperbound)
+    XCTAssertGreaterThan($lastName, $lowerName)
+    XCTAssertLessThan($lowerName, $lastName)
   }
 }

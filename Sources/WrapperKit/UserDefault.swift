@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,26 +23,21 @@
 import Foundation
 
 @propertyWrapper
-public struct Email<Value: StringProtocol> {
-  var value: Value?
-
-  public init(_ wrappedValue: Value? = nil) {
-    self.wrappedValue = wrappedValue
+public struct UserDefault<Value> {
+  let key: String
+  let defaultValue: Value
+  
+  public init(_ key: String, defaultValue: Value) {
+    self.key = key
+    self.defaultValue = defaultValue
   }
   
-  public var wrappedValue: Value? {
+  public var wrappedValue: Value {
     get {
-      return validate(email: value) ? value : nil
+      return UserDefaults.standard.object(forKey: key) as? Value ?? defaultValue
     }
     set {
-      value = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) as? Value
+      UserDefaults.standard.set(newValue, forKey: key)
     }
-  }
-
-  private func validate(email: Value?) -> Bool {
-    guard let email = email else { return false }
-    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    return emailPred.evaluate(with: email)
   }
 }

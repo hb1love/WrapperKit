@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,36 +20,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import XCTest
-@testable import WrapperKit
+import Foundation
+@available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+@propertyWrapper
+public struct ISO8601DateFormatted {
+  static private let formatter = ISO8601DateFormatter()
 
-class CaseInsensitiveTests: XCTestCase {
-  @CaseInsensitive("default") var lowerName: String
-  @CaseInsensitive("default") var upperName: String
-  @CaseInsensitive("default") var lastName: String
+  public var projectedValue: String { ISO8601DateFormatted.formatter.string(from: wrappedValue) }
+  public var wrappedValue: Date
 
-  func testCaseInsensitive() {
-    // Given
-    let newLowerName = "esther"
-    let newUpperName = "ESTHER"
-
-    // When
-    lowerName = newLowerName
-    upperName = newUpperName
-
-    // Then
-    XCTAssertEqual($lowerName, $upperName)
-    XCTAssertEqual(lowerName, newLowerName)
-    XCTAssertEqual(upperName, newUpperName)
-  }
-
-  func testCompareCaseInsensitive() {
-    // When
-    lowerName = "default"
-    lastName = "Kim"
-
-    // Then
-    XCTAssertGreaterThan($lastName, $lowerName)
-    XCTAssertLessThan($lowerName, $lastName)
+  public init(_ wrappedValue: Date = Date(timeIntervalSince1970: 0)) {
+    self.wrappedValue = wrappedValue
   }
 }

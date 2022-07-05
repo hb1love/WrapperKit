@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,21 +23,18 @@
 import Foundation
 
 @propertyWrapper
-public struct UserDefault<Value> {
-  let key: String
-  let defaultValue: Value
-  
-  public init(_ key: String, defaultValue: Value) {
-    self.key = key
-    self.defaultValue = defaultValue
+public struct Constrained<Value: Comparable> {
+  var range: ClosedRange<Value>
+  var value: Value
+
+  public init(_ value: Value, range: ClosedRange<Value>) {
+    precondition(range.contains(value))
+    self.value = value
+    self.range = range
   }
-  
+
   public var wrappedValue: Value {
-    get {
-      return UserDefaults.standard.object(forKey: key) as? Value ?? defaultValue
-    }
-    set {
-      UserDefaults.standard.set(newValue, forKey: key)
-    }
+    get { value }
+    set { value = min(max(range.lowerBound, newValue), range.upperBound) }
   }
 }

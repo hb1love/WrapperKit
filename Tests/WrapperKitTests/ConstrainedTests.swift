@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,18 +20,44 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import WrapperKit
 
-@available(iOS 10.0, *)
-@available(OSX 10.12, *)
-@propertyWrapper
-public struct ISO8601DateFormatted {
-  static private let formatter = ISO8601DateFormatter()
+class ConstrainedTests: XCTestCase {
+  private let lowerbound = 1
+  private let upperbound = 12
+  @Constrained(1, range: 1...12) var month: Int
 
-  public var projectedValue: String { ISO8601DateFormatted.formatter.string(from: wrappedValue) }
-  public var wrappedValue: Date
+  func testConstrained() {
+    // Given
+    let newMonth = 12
 
-  public init(_ wrappedValue: Date = Date(timeIntervalSince1970: 0)) {
-    self.wrappedValue = wrappedValue
+    // When
+    month = newMonth
+
+    // Then
+    XCTAssertEqual(month, newMonth)
+  }
+
+  func testLowerboundConstrained() {
+    // Given
+    let newMonth = 0
+
+    // When
+    month = newMonth
+
+    // Then
+    XCTAssertEqual(month, lowerbound)
+  }
+
+  func testUpperboundConstrained() {
+    // Given
+    let newMonth = 13
+
+    // When
+    month = newMonth
+
+    // Then
+    XCTAssertEqual(month, upperbound)
   }
 }
