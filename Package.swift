@@ -5,10 +5,10 @@ import PackageDescription
 let package = Package(
   name: "WrapperKit",
   platforms: [
-    .macOS(.v10_10),
+    .macOS(.v10_12),
     .iOS(.v9),
-    .tvOS(.v9),
-    .watchOS(.v2)
+    .tvOS(.v10),
+    .watchOS(.v3)
   ],
   products: [
     .library(
