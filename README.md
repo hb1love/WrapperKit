@@ -29,7 +29,7 @@ Swift Property Wrappers Kit
   let package = Package(
     name: "MyApp",
     dependencies: [
-      .package(url: "https://github.com/hb1love/WrapperKit", .upToNextMajor(from: "1.0.0"))
+      .package(url: "https://github.com/hb1love/WrapperKit", .upToNextMajor(from: "1.1.0"))
     ]
   )
   ```
