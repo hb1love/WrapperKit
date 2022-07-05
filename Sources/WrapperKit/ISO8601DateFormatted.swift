@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,7 +20,18 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Foundation/Foundation.h>
+import Foundation
 
-FOUNDATION_EXPORT double WrapperKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char WrapperKitVersionString[];
+@available(iOS 10.0, *)
+@available(OSX 10.12, *)
+@propertyWrapper
+public struct ISO8601DateFormatted {
+  static private let formatter = ISO8601DateFormatter()
+
+  public var projectedValue: String { ISO8601DateFormatted.formatter.string(from: wrappedValue) }
+  public var wrappedValue: Date
+
+  public init(_ wrappedValue: Date = Date(timeIntervalSince1970: 0)) {
+    self.wrappedValue = wrappedValue
+  }
+}

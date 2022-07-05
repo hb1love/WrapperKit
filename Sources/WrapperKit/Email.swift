@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,44 +20,29 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import XCTest
-@testable import WrapperKit
+import Foundation
 
-class ConstrainedTests: XCTestCase {
-  private let lowerbound = 1
-  private let upperbound = 12
-  @Constrained(1, range: 1...12) var month: Int
+@propertyWrapper
+public struct Email<Value: StringProtocol> {
+  var value: Value?
 
-  func testConstrained() {
-    // Given
-    let newMonth = 12
-
-    // When
-    month = newMonth
-
-    // Then
-    XCTAssertEqual(month, newMonth)
+  public init(_ wrappedValue: Value? = nil) {
+    self.wrappedValue = wrappedValue
+  }
+  
+  public var wrappedValue: Value? {
+    get {
+      return validate(email: value) ? value : nil
+    }
+    set {
+      value = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) as? Value
+    }
   }
 
-  func testLowerboundConstrained() {
-    // Given
-    let newMonth = 0
-
-    // When
-    month = newMonth
-
-    // Then
-    XCTAssertEqual(month, lowerbound)
-  }
-
-  func testUpperboundConstrained() {
-    // Given
-    let newMonth = 13
-
-    // When
-    month = newMonth
-
-    // Then
-    XCTAssertEqual(month, upperbound)
+  private func validate(email: Value?) -> Bool {
+    guard let email = email else { return false }
+    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+    let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+    return emailPred.evaluate(with: email)
   }
 }

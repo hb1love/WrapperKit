@@ -1,25 +1,30 @@
-// swift-tools-version:5.1
+// swift-tools-version:5.3
 
 import PackageDescription
 
 let package = Package(
   name: "WrapperKit",
   platforms: [
-    .iOS(.v8)
+    .macOS(.v10_10),
+    .iOS(.v9),
+    .tvOS(.v9),
+    .watchOS(.v2)
   ],
   products: [
     .library(
       name: "WrapperKit",
-      targets: ["WrapperKit"]),
+      targets: ["WrapperKit"]
+    ),
   ],
   dependencies: [],
   targets: [
     .target(
-      name: "WrapperKit",
-      path: "Sources"),
+      name: "WrapperKit"
+    ),
     .testTarget(
       name: "WrapperKitTests",
-      dependencies: ["WrapperKit"],
-      path: "Tests"),
-  ]
+      dependencies: ["WrapperKit"]
+    )
+  ],
+  swiftLanguageVersions: [.v5]
 )

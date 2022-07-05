@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,33 +23,19 @@
 import XCTest
 @testable import WrapperKit
 
-class CaseInsensitiveTests: XCTestCase {
-  @CaseInsensitive("default") var lowerName: String
-  @CaseInsensitive("default") var upperName: String
-  @CaseInsensitive("default") var lastName: String
+@available(iOS 10.0, *)
+@available(OSX 10.12, *)
+class ISO8601DateFormattedTests: XCTestCase {
+  @ISO8601DateFormatted(Date()) var date: Date
 
-  func testCaseInsensitive() {
+  func testISO8601DateFormatted() {
     // Given
-    let newLowerName = "esther"
-    let newUpperName = "ESTHER"
+    let newDate = Date(timeIntervalSince1970: 3630)
 
     // When
-    lowerName = newLowerName
-    upperName = newUpperName
+    date = newDate
 
     // Then
-    XCTAssertEqual($lowerName, $upperName)
-    XCTAssertEqual(lowerName, newLowerName)
-    XCTAssertEqual(upperName, newUpperName)
-  }
-
-  func testCompareCaseInsensitive() {
-    // When
-    lowerName = "default"
-    lastName = "Kim"
-
-    // Then
-    XCTAssertGreaterThan($lastName, $lowerName)
-    XCTAssertLessThan($lowerName, $lastName)
+    XCTAssertEqual($date, "1970-01-01T01:00:30Z")
   }
 }

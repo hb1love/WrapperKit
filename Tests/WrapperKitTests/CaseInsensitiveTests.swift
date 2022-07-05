@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,28 +23,33 @@
 import XCTest
 @testable import WrapperKit
 
-class EmailTests: XCTestCase {
-  @Email("esther") var email: String?
+class CaseInsensitiveTests: XCTestCase {
+  @CaseInsensitive("default") var lowerName: String
+  @CaseInsensitive("default") var upperName: String
+  @CaseInsensitive("default") var lastName: String
 
-  func testValidEmail() {
+  func testCaseInsensitive() {
     // Given
-    let myEmail = "esther@gmail.com"
+    let newLowerName = "esther"
+    let newUpperName = "ESTHER"
 
     // When
-    email = myEmail
+    lowerName = newLowerName
+    upperName = newUpperName
 
     // Then
-    XCTAssertEqual(email, myEmail)
+    XCTAssertEqual($lowerName, $upperName)
+    XCTAssertEqual(lowerName, newLowerName)
+    XCTAssertEqual(upperName, newUpperName)
   }
 
-  func testInvalidEmail() {
-    // Given
-    let myEmail = "esther@gmail"
-
+  func testCompareCaseInsensitive() {
     // When
-    email = myEmail
+    lowerName = "default"
+    lastName = "Kim"
 
     // Then
-    XCTAssertNil(email)
+    XCTAssertGreaterThan($lastName, $lowerName)
+    XCTAssertLessThan($lowerName, $lastName)
   }
 }

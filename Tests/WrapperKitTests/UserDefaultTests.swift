@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,29 +20,20 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import Foundation
+import XCTest
+@testable import WrapperKit
 
-@propertyWrapper
-public struct Email<Value: StringProtocol> {
-  var value: Value?
+class UserDefaultTests: XCTestCase {
+  @UserDefault("com.esther.test", defaultValue: "E29jw102") var session: String
 
-  public init(_ wrappedValue: Value? = nil) {
-    self.wrappedValue = wrappedValue
-  }
-  
-  public var wrappedValue: Value? {
-    get {
-      return validate(email: value) ? value : nil
-    }
-    set {
-      value = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) as? Value
-    }
-  }
+  func testUserDefault() throws {
+    // Given
+    let newSession = "D920J14"
 
-  private func validate(email: Value?) -> Bool {
-    guard let email = email else { return false }
-    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    return emailPred.evaluate(with: email)
+    // When
+    session = newSession
+
+    // Then
+    XCTAssertEqual(session, newSession)
   }
 }

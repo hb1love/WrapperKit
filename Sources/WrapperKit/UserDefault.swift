@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -20,21 +20,24 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-import XCTest
-@testable import WrapperKit
+import Foundation
 
-class TrimmedTests: XCTestCase {
-  @Trimmed("") var content: String
-
-  func testTrimmed() {
-    // Given
-    let newContent = " awesome "
-    let expected = "awesome"
-
-    // When
-    content = newContent
-
-    // Then
-    XCTAssertEqual(content, expected)
+@propertyWrapper
+public struct UserDefault<Value> {
+  let key: String
+  let defaultValue: Value
+  
+  public init(_ key: String, defaultValue: Value) {
+    self.key = key
+    self.defaultValue = defaultValue
+  }
+  
+  public var wrappedValue: Value {
+    get {
+      return UserDefaults.standard.object(forKey: key) as? Value ?? defaultValue
+    }
+    set {
+      UserDefaults.standard.set(newValue, forKey: key)
+    }
   }
 }

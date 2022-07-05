@@ -1,6 +1,6 @@
 //  MIT License
 //
-//  Copyright (c) 2020 Esther. All rights reserved.
+//  Copyright © 2022 Kim Heebeom. All rights reserved.
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,19 +23,28 @@
 import XCTest
 @testable import WrapperKit
 
-@available(iOS 10.0, *)
-@available(OSX 10.12, *)
-class ISO8601DateFormattedTests: XCTestCase {
-  @ISO8601DateFormatted(Date()) var date: Date
+class EmailTests: XCTestCase {
+  @Email("esther") var email: String?
 
-  func testISO8601DateFormatted() {
+  func testValidEmail() {
     // Given
-    let newDate = Date(timeIntervalSince1970: 3630)
+    let myEmail = "esther@gmail.com"
 
     // When
-    date = newDate
+    email = myEmail
 
     // Then
-    XCTAssertEqual($date, "1970-01-01T01:00:30Z")
+    XCTAssertEqual(email, myEmail)
+  }
+
+  func testInvalidEmail() {
+    // Given
+    let myEmail = "esther@gmail"
+
+    // When
+    email = myEmail
+
+    // Then
+    XCTAssertNil(email)
   }
 }
