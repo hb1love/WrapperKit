@@ -1,12 +1,15 @@
 # WrapperKit
 
-[![Swift](https://img.shields.io/badge/Swift-5.2-orange.svg)](https://swift.org)
-[![Platform](https://img.shields.io/cocoapods/p/WrapperKit.svg?style=flat)](https://github.com/hb1love/WrapperKit)
-[![CocoaPods](http://img.shields.io/cocoapods/v/WrapperKit.svg)](https://github.com/hb1love/WrapperKit)
-[![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-4BC51D.svg?style=flat)](https://swift.org/package-manager)
-[![Build Status](https://github.com/hb1love/WrapperKit/workflows/CI/badge.svg?branch=main)](https://github.com/hb1love/WrapperKit/actions)
-[![codecov](https://codecov.io/gh/hb1love/WrapperKit/branch/main/graph/badge.svg)](https://codecov.io/gh/hb1love/WrapperKit)
-[![License](https://img.shields.io/github/license/hb1love/WrapperKit)](LICENSE)
+<p align="center">
+<a href="https://swift.org" target="_blank"><img src="https://img.shields.io/badge/Swift-5.3-orange.svg"></a>
+<a href="https://cocoapods.org/pods/WrapperKit" target="_blank"><img src="https://img.shields.io/cocoapods/p/WrapperKit.svg?style=flat"></a>
+<a href="https://cocoapods.org/pods/WrapperKit" target="_blank"><img src="http://img.shields.io/cocoapods/v/WrapperKit.svg"></a>
+<a href="https://swift.org/package-manager" target="_blank"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-4BC51D.svg?style=flat"></a>
+<br />
+<a href="https://github.com/hb1love/WrapperKit/actions"><img src="https://github.com/hb1love/WrapperKit/workflows/CI/badge.svg?branch=main"></a>
+<a href="https://codecov.io/gh/hb1love/WrapperKit" target="_blank"><img src="https://codecov.io/gh/hb1love/WrapperKit/branch/main/graph/badge.svg"></a>
+<a href="LICENSE"><img src="https://img.shields.io/github/license/hb1love/WrapperKit"></a>
+</p>
 
 Swift Property Wrappers Kit
 
