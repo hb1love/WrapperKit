@@ -23,26 +23,42 @@
 import Foundation
 
 @propertyWrapper
-public struct Email<Value: StringProtocol> {
-  var value: Value?
-
-  public init(_ wrappedValue: Value? = nil) {
-    self.wrappedValue = wrappedValue
+public struct Document<Value: Codable> {
+  let key: String
+  let category: String
+  let defaultValue: Value?
+  
+  private var url: URL?
+    
+  public init(key: String, category: String, defaultValue: Value? = nil) {
+    self.key = key
+    self.category = category
+    self.defaultValue = defaultValue
+    
+    if let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first {
+      let intermediate = URL(fileURLWithPath: path).appendingPathComponent(category, isDirectory: true)
+      try? FileManager.default.createDirectory(
+        at: intermediate,
+        withIntermediateDirectories: true,
+        attributes: nil
+      )
+      self.url = intermediate.appendingPathComponent(key)
+    }
   }
   
   public var wrappedValue: Value? {
     get {
-      return validate(email: value) ? value : nil
+      guard let url, let data = try? Data(contentsOf: url) else { return defaultValue }
+      return (try? JSONDecoder().decode(Value.self, from: data)) ?? defaultValue
     }
     set {
-      value = newValue?.trimmingCharacters(in: .whitespacesAndNewlines) as? Value
+      guard let url else { return }
+      if let newValue {
+        let data = try? JSONEncoder().encode(newValue)
+        try? data?.write(to: url)
+      } else {
+        try? FileManager.default.removeItem(at: url)
+      }
     }
-  }
-
-  private func validate(email: Value?) -> Bool {
-    guard let email = email else { return false }
-    let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-    let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-    return emailPred.evaluate(with: email)
   }
 }
